@@ -31,7 +31,7 @@ def delete_blocks(X,y, intervals = [2,4,8,9]):
 	bod += (X>intervals[-1]).reshape(-1,1)
 	return X[bod].reshape(-1,1), y[bod].reshape(-1,1)
 
-def start_df(model_name, N_train, M=np.NaN, hidden_size=np.NaN, optimizer=np.NaN): 
+def start_df(model_name, N_train, M=np.NaN, hidden_size=np.NaN, optimizer=np.NaN, init='default'): 
 	column_names = ['exp','model', 'N_train', 'M', 'hidden_size', 'optimizer',
 					'mse', 'nll','config','init',
 					'outlier', 'time']
@@ -41,6 +41,7 @@ def start_df(model_name, N_train, M=np.NaN, hidden_size=np.NaN, optimizer=np.NaN
 	df['M'] = M
 	df['hidden_size'] = str(hidden_size)
 	df['optimizer'] = optimizer
+	df['init'] = init
 	return df
 
 def df_name(df): 

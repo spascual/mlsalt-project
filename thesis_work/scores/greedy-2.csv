@@ -1,0 +1,5 @@
+,exp,model,N_train,M,hidden_size,optimizer,mse,nll,config,init,outlier,time
+0,,DGP,500,50,[2],adam_Mxit1100,0.0303985629989,-0.630369824529,0.111,greedy,,cont.
+0,,DGP,1000,50,[2],adam_Mxit1100,0.0167984472568,-0.660183537148,0.112,greedy,,cont.
+0,,DGP,1250,50,[2],adam_Mxit1100,0.022097424754,-0.473012960238,0.136,greedy,,cont.
+0,,DGP,750,50,[2],adam_Mxit1100,0.0253839825393,-0.358064300952,0.15,greedy,,cont.

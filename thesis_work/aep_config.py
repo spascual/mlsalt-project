@@ -65,8 +65,9 @@ def aep_DGP_reg(X_train, y_train, X_test, y_test,
 
 	df = start_df(['DGP'], N_train=X_train.shape[0],M=conf_dict['M'], 
 				hidden_size=conf_dict['hidden_size'], 
-				optimizer=conf_dict['optimizer'] + '_Mxit' + str(conf_dict['max_it']))
-	df['mse'], df['nll'], df['time'], df['config'], df['init'] = mse, nll, t1 - t0, sn, conf_dict['init_type']
+				optimizer=conf_dict['optimizer'] + '_Mxit' + str(conf_dict['max_it']),
+				init=conf_dict['init_type'])
+	df['mse'], df['nll'], df['time'], df['config'] = mse, nll, t1 - t0, sn
 
 
 	print 'Test MSE= %.3f, NLL= %.3f, SN= %.3f' % (mse, nll, sn)
@@ -87,7 +88,8 @@ def cont_optimization(model, X_test, y_test, conf_dict=default_conf, new_max_it=
 	conf_dict['max_it'] += it_0
 	df = start_df(['DGP'], N_train=model.x_train.shape[0],M=conf_dict['M'], 
 				hidden_size=conf_dict['hidden_size'], 
-				optimizer=conf_dict['optimizer'] + '_Mxit' + str(conf_dict['max_it']))
+				optimizer=conf_dict['optimizer'] + '_Mxit' + str(conf_dict['max_it']),
+				init=conf_dict['init_type'])
 	df['mse'], df['nll'], df['time'], df['config'] = mse, nll, 'cont.', sn
 	print 'Test MSE= %.3f, NLL= %.3f, SN= %.3f' % (mse, nll, sn)
 	if return_cost:
