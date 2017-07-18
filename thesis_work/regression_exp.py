@@ -7,7 +7,6 @@ import os
 import pdb
 
 from context import aep
-from context import gpr
 from context import load_data
 from context import delete_blocks
 from context import start_df
@@ -32,22 +31,30 @@ main_folder = 'thesis_work/scores/'
 X_train, y_train, X_test, y_test = load_data(path, N_train=N_train, test=0.4, norm_out=False)
 # X_test, y_test = delete_blocks(X_test, y_test,
 #                                intervals=[2,4,8,9])
-
+M = 50
 ## BASELINE MODELS:
 # model_gp, df_gp = full_GP_reg(X_train, y_train, X_test, y_test)
 # save_df(main_folder, df_gp, name='greedy'+ str(sys.argv[2]))
-# M = 50
+
 # model_sgp, df_sgp = sparse_GP_reg(X_train, y_train, X_test, y_test, M=M)
 # save_df(main_folder, df_sgp, name='greedy'+ str(sys.argv[2]))
 
 
-config_dict = {'M': 50, 'hidden_size': [2], 
-			'optimizer':'adam', 'max_it':2000,
+config_dict0 = {'M': M, 'hidden_size': [2], 
+			'optimizer':'adam', 'max_it':1000,
             'MB': 250, 'lr': 0.01, 'fixed_hyp': [], 'init_type' : 'greedy'}
 
 model_aep, df = aep_DGP_reg(X_train, y_train, X_test, y_test, 
-				conf_dict= config_dict,
+				conf_dict= config_dict0,
 				return_cost=False)
+print 'Cont. opt. with no fixed parameters'
+config_dict2 = {'M': M, 'hidden_size': [2], 
+			'optimizer':'adam', 'max_it':1000,
+            'MB': 250, 'lr': 0.01, 'fixed_hyp': [],
+            'init_type':'greedy'}
+
+model_aep, df = cont_optimization(model_aep, X_test, y_test, conf_dict=config_dict2,
+                              new_max_it=1000, return_cost=False)
 save_df(main_folder, df, name='greedy'+ str(sys.argv[2]))
 
 # fig1 = DGP_figures(model_aep, config_dict).plot_h_out()

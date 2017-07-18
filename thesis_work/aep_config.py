@@ -3,7 +3,6 @@ import pandas as pd
 import GPy
 
 from context import aep
-from context import gpr
 from context import load_data
 from context import delete_blocks
 from context import start_df
