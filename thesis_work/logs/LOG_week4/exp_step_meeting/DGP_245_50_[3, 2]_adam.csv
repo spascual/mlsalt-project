@@ -1,0 +1,2 @@
+,exp,model,N_train,M,hidden_size,optimizer,mse,nll,outlier,outlier_var,time,bumps
+0,step_meeting,DGP,245,50,"[3, 2]",adam,0.0686666945766,-1.51060737651,True,0.00429701091069,95.202445,

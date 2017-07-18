@@ -1,0 +1,2 @@
+,exp,model,N_train,M,hidden_size,optimizer,mse,nll,outlier,outlier_var,time,bumps
+0,DGP_2,DGP,1000,50,[2],adam,0.157172026432,0.205950312835,,,143.64289,

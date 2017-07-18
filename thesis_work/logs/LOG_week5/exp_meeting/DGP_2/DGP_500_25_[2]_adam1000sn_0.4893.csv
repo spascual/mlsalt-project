@@ -1,0 +1,2 @@
+,exp,model,N_train,M,hidden_size,optimizer,mse,nll,outlier,outlier_var,time,config
+0,meeting,DGP,500,25,[2],adam1000sn_0.4893,0.412386829163,0.889311632691,,,32.001809,mb_500lr_0.02

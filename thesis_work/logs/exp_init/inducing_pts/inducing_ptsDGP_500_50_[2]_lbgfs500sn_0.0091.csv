@@ -1,0 +1,2 @@
+,exp,model,N_train,M,hidden_size,optimizer,mse,nll,outlier,outlier_var,time,config
+0,meeting,DGP,500,50,[2],lbgfs500sn_0.0091,0.477828216492,0.706016443404,,,249.172621,mb_250lr_0.02
