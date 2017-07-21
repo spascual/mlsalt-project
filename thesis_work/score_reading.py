@@ -27,7 +27,7 @@ def load_data_frames(search_path):
 
 def pivot_mean_std(df): 
     df_error = pd.DataFrame()
-    df = df.drop_duplicates(subset=['N_train','exp'])
+    df = df.drop_duplicates(subset=['N_train','exp'], keep='last')
     df_error['mse_mean'] = df.pivot(index='N_train', columns='exp',values='mse').mean(axis=1)
     df_error['mse_std'] = df.pivot(index='N_train', columns='exp',values='mse').std(axis=1)
     df_error['nll_mean'] = df.pivot(index='N_train', columns='exp',values='nll').mean(axis=1)

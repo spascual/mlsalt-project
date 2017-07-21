@@ -103,7 +103,7 @@ class Base_Model(object):
             #                                 axis=0)
             # init_params_dict['eta1_R_0'] = np.concatenate((params_sgp['eta1_R_0'],
             #                                 params_sgp['eta1_R_0']), axis=0)
-
+            # print 'Original SGP params', init_params_dict
         elif reinit_hypers == 'short_long':
             print 'Short Long initialisation'
             init_params_dict = self.init_hypers(self.y_train, init_type=reinit_hypers)
