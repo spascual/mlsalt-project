@@ -30,7 +30,7 @@ main_folder = 'thesis_work/scores/'
 X_train, y_train, X_test, y_test = load_data(path, N_train=N_train, test=0.4, norm_out=False)
 # X_test, y_test = delete_blocks(X_test, y_test,
 #                                intervals=[2,4,8,9])
-M = 75
+M = 40
 
 config_dict0 = {'M': M, 'hidden_size': [2], 
 			'optimizer':'adam', 'max_it':1500,

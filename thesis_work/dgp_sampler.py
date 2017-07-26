@@ -3,11 +3,11 @@ import numpy as np
 import GPy
 
 # from .context import gpr
-from context import dgpr
-from context import gpr
-from context import ei
-from context import lbfgs_search
-from context import base_task
+# from context import dgpr
+# # from context import gpr
+# from context import ei
+# from context import lbfgs_search
+# from context import base_task
 import time
 np.random.seed(42)
 import pdb

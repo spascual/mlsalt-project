@@ -47,7 +47,7 @@ def optimize_aep(model, config, reinit=True):
 
 
 def aep_DGP_reg(X_train, y_train, X_test, y_test, 
-				conf_dict= default_conf,
+				conf_dict=default_conf,
 				return_cost=False):
 
 	t0 = time.clock()
@@ -79,6 +79,9 @@ def aep_DGP_reg(X_train, y_train, X_test, y_test,
 def cont_optimization(model, X_test, y_test, conf_dict=default_conf, new_max_it=250, return_cost=False): 
 	it_0 = conf_dict['max_it']
 	conf_dict['max_it'] = new_max_it
+
+	model.set_fixed_params(conf_dict['fixed_hyp'])
+	print 'Optimise with fixed: ', model.fixed_params
 	model, costs = optimize_aep(model, config=conf_dict, reinit=False)
 
 	mean, var = model.predict_y(X_test)

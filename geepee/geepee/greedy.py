@@ -24,9 +24,6 @@ def get_params_SGP_old(X_train, y_train, M):
     return param
 
 def get_params_SGP(X_train, y_train, M): 
-    default_conf = {'M': M, 'hidden_size': [], 
-      'optimizer':'adam', 'max_it':1000,
-            'MB': 250, 'lr': 0.01, 'fixed_hyp': []}
     print 'Perform sparse GP regression'
     model_sgp = GPy.models.SparseGPRegression(X_train,y_train, kernel=GPy.kern.RBF(input_dim=1),num_inducing=M)
     model_sgp.optimize('bfgs',messages=False)
@@ -38,17 +35,17 @@ def get_params_SGP(X_train, y_train, M):
     Kuu += np.diag(JITTER * np.ones((M, )))
     # Kuu += np.diag(1e-1* np.ones((M, )))
     Kuuinv = np.linalg.inv(Kuu)
-    Suinv = np.linalg.inv(Su)
-    # Suinv = np.linalg.inv(Su- np.diag(1e-1* np.ones((M, ))))
-    theta1 = Suinv #- Kuuinv
-    # theta1 = Suinv - Kuuinv + np.diag(1e-1* np.ones((M, )))
-    # theta1 += np.diag(1e-4 * np.ones((M, )))
-    theta2 = np.dot(Suinv, mu)
     # WRITTING PARAMS IN THE RIGHT SHAPE
     Dout = 2
     eta1_R = np.zeros((Dout, M * (M + 1) / 2))
     eta2 = np.zeros((Dout, M))
     for d in range(Dout):
+      Suinv = np.linalg.inv(Su+  np.diag(1e-2 * np.random.rand(M)))
+      # Suinv = np.linalg.inv(Su- np.diag(1e-1* np.ones((M, ))))
+      theta1 = Suinv #- Kuuinv
+      # theta1 = Suinv - Kuuinv + np.diag(1e-1* np.ones((M, )))
+      # theta1 += np.diag(1e-4 * np.ones((M, )))
+      theta2 = np.dot(Suinv, mu)
       R = np.linalg.cholesky(theta1).T
       triu_ind = np.triu_indices(M)
       diag_ind = np.diag_indices(M)
@@ -57,6 +54,33 @@ def get_params_SGP(X_train, y_train, M):
       eta2_d = theta2.reshape((M,))
       eta1_R[d, :] = eta1_d
       eta2[d, :] = eta2_d
+
+    # JITTER = 1e-5
+    # zu = model_sgp.Z.values
+    # mu, Su = model_sgp.predict(zu, full_cov=True)
+    # Kuu = model_sgp.kern.K(zu)
+    # Kuu += np.diag(JITTER * np.ones((M, )))
+    # # Kuu += np.diag(1e-1* np.ones((M, )))
+    # Kuuinv = np.linalg.inv(Kuu)
+    # Suinv = np.linalg.inv(Su)
+    # # Suinv = np.linalg.inv(Su- np.diag(1e-1* np.ones((M, ))))
+    # theta1 = Suinv #- Kuuinv
+    # # theta1 = Suinv - Kuuinv + np.diag(1e-1* np.ones((M, )))
+    # # theta1 += np.diag(1e-4 * np.ones((M, )))
+    # theta2 = np.dot(Suinv, mu)
+    # # WRITTING PARAMS IN THE RIGHT SHAPE
+    # Dout = 2
+    # eta1_R = np.zeros((Dout, M * (M + 1) / 2))
+    # eta2 = np.zeros((Dout, M))
+    # for d in range(Dout):
+    #   R = np.linalg.cholesky(theta1).T
+    #   triu_ind = np.triu_indices(M)
+    #   diag_ind = np.diag_indices(M)
+    #   R[diag_ind] = np.log(R[diag_ind])
+    #   eta1_d = R[triu_ind].reshape((M * (M + 1) / 2,))
+    #   eta2_d = theta2.reshape((M,))
+    #   eta1_R[d, :] = eta1_d
+    #   eta2[d, :] = eta2_d
 
     param = {'zu_0':zu,
             'sf_0':np.log(model_sgp.kern.variance.values),

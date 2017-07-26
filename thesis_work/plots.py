@@ -177,7 +177,7 @@ class DGP_figures(object):
 		    color='blue', alpha=0.2)
 		plt.errorbar(zu, mean_u[:, 0], yerr=2 * np.sqrt(var_u[:, 0]), fmt='ro',label='proj z0')
 
-		h1_min,h1_max = np.min(mean[:,0]) - 1.5, np.max(mean[:,0])+1.5
+		h1_min,h1_max = np.min(mean[:,0]) - 1.0, np.max(mean[:,0])+1.0
 		plt.plot(zu, h1_min * np.ones(zu.shape), 'rx')
 		plt.plot(zu_init, h1_max * np.ones(zu_init.shape), 'kx')
 		plt.legend()
@@ -196,7 +196,7 @@ class DGP_figures(object):
 		    color='blue', alpha=0.2)
 		plt.errorbar(zu, mean_u[:, 1], yerr=2 * np.sqrt(var_u[:, 1]), fmt='ro',label='proj z0')
 
-		h1_min,h1_max = np.min(mean[:,1]) - 1.5, np.max(mean[:,1])+1.5
+		h1_min,h1_max = np.min(mean[:,1]) - 1.0, np.max(mean[:,1])+1.0
 		plt.plot(zu, h1_min * np.ones(zu.shape), 'rx')
 		plt.plot(zu_init, h1_max * np.ones(zu_init.shape), 'kx')
 		plt.legend()

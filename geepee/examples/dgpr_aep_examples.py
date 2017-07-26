@@ -17,10 +17,10 @@ def run_regression_1D():
 
     print "create dataset ..."
     N = 200
-    X = np.random.rand(N, 1)
-    Y = np.sin(75 * X) + np.random.randn(N, 1) * 0.01
-    # plt.plot(X, Y, 'kx', mew=2)
-
+    X = np.random.rand(N, 2)
+    Z = np.sin(2 * X) + np.random.randn(N, 1) * 0.01
+    # plt.plot(X, Z, 'kx', mew=2)
+    import pdb; pdb.set_trace()
     def plot(m):
         xx = np.linspace(-0.5, 1.5, 100)[:, None]
         mean, var = m.predict_f(xx)
@@ -28,7 +28,7 @@ def run_regression_1D():
         zu = m.sgp_layers[0].zu
         mean_u, var_u = m.predict_f(zu)
         plt.figure()
-        plt.plot(X, Y, 'kx', mew=2)
+        plt.plot(X, Z, 'kx', mew=2)
         plt.plot(xx, mean, 'b', lw=2)
         plt.fill_between(
             xx[:, 0],
@@ -42,13 +42,13 @@ def run_regression_1D():
 
     # inference
     print "create model and optimize ..."
-    M = 50
+    M = 20
     hidden_size = [2]
-    model = aep.SDGPR(X, Y, M, hidden_size, lik='Gaussian')
-    model.optimise(method='L-BFGS-B', alpha=1, maxiter=2000)
-    plot(model)
-    # plt.show()
-    plt.savefig('/tmp/aep_dgpr_1D.pdf')
+    model = aep.SDGPR(X, Z, M, hidden_size, lik='Gaussian')
+    model.optimise(method='L-BFGS-B', alpha=1, maxiter=100)
+    # plot(model)
+    plt.show()
+    # plt.savefig('/tmp/aep_dgpr_1D.pdf')
 
 
 def run_banana():
