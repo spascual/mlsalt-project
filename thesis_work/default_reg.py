@@ -25,19 +25,21 @@ from aep_config import aep_DGP_reg
 N_train = int(sys.argv[1])
 print 'Run experiment with ', N_train
 
-path = 'thesis_work/data/sample_' + str(sys.argv[2]) + '.txt'
+# path = 'thesis_work/data/sample_' + str(sys.argv[2]) + '.txt'
+path = 'thesis_work/data/dgp_samples/new/sample_' + str(sys.argv[2]) + '.txt'
+# main_folder = 'thesis_work/scores/'
 main_folder = 'thesis_work/scores/'
 X_train, y_train, X_test, y_test = load_data(path, N_train=N_train, test=0.4, norm_out=False)
 # X_test, y_test = delete_blocks(X_test, y_test,
 #                                intervals=[2,4,8,9])
-M = 75
+M = 50
 
 config_dict0 = {'M': M, 'hidden_size': [2], 
 			'optimizer':'adam', 'max_it':1500,
-            'MB': 250, 'lr': 0.01, 'fixed_hyp': [], 'init_type' : True}
+            'MB': 250, 'lr': 0.01, 'fixed_hyp': [], 'init_type' : 'long_short'}
 
 model_aep, df = aep_DGP_reg(X_train, y_train, X_test, y_test, 
 				conf_dict= config_dict0,
 				return_cost=False)
 
-save_df(main_folder, df, name='default'+ str(sys.argv[2]))
+save_df(main_folder, df, name='long_short'+ str(sys.argv[2]))

@@ -31,7 +31,7 @@ main_folder = 'thesis_work/scores/'
 X_train, y_train, X_test, y_test = load_data(path, N_train=N_train, test=0.4, norm_out=False)
 # X_test, y_test = delete_blocks(X_test, y_test,
 #                                intervals=[2,4,8,9])
-M = 75
+M = 30
 ## BASELINE MODELS:
 # model_gp, df_gp = full_GP_reg(X_train, y_train, X_test, y_test)
 # save_df(main_folder, df_gp, name='greedy'+ str(sys.argv[2]))
@@ -41,8 +41,9 @@ M = 75
 
 
 config_dict0 = {'M': M, 'hidden_size': [2], 
-			'optimizer':'adam', 'max_it':600,
-            'MB': 250, 'lr': 0.01, 'fixed_hyp': ['zu_0'], 'init_type' : 'greedy'}
+			'optimizer':'adam', 'max_it':800,
+            'MB': 250, 'lr': 0.01, 'fixed_hyp': ['zu_0', 'eta2_0'],
+            'init_type' : 'greedy'}
 
 model_aep, df = aep_DGP_reg(X_train, y_train, X_test, y_test, 
 				conf_dict= config_dict0,

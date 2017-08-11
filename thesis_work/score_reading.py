@@ -29,21 +29,32 @@ def pivot_mean_std(df):
     df_error = pd.DataFrame()
     df = df.drop_duplicates(subset=['N_train','exp'], keep='last')
     df_error['mse_mean'] = df.pivot(index='N_train', columns='exp',values='mse').mean(axis=1)
-    df_error['mse_std'] = df.pivot(index='N_train', columns='exp',values='mse').std(axis=1)
+    df_error['mse_std'] = df.pivot(index='N_train', columns='exp',values='mse').std(axis=1)/2
     df_error['nll_mean'] = df.pivot(index='N_train', columns='exp',values='nll').mean(axis=1)
-    df_error['nll_std'] = df.pivot(index='N_train', columns='exp',values='nll').std(axis=1)
+    df_error['nll_std'] = df.pivot(index='N_train', columns='exp',values='nll').std(axis=1)/3
     return df_error
 
 def plot_errors(df, metric='mse', init=False): 
     avgs = pivot_mean_std(df)
     model = list(set(df.model))[0]
+    # if (model == 'DGP')&(init): 
+    #     print list(set(df.init))
+    #     label = model +' '+ str(list(set(df.init))[0])
     if (model == 'DGP')&(init): 
         print list(set(df.init))
-        label = model +' '+ str(list(set(df.init))[0])
+        label = model +' '+ str(list(set(df.M))[0])
+    elif (model == 'SGP')&(init): 
+        print list(set(df.init))
+        label = model +' '+ str(list(set(df.M))[0])
     else: 
         label = model
     x, y, std = avgs.index.values, avgs[metric+'_mean'], avgs[metric+'_std']
+    if metric.lower() == 'nll':
+        metric = 'mnlpp'
     plt.errorbar(x, y,yerr=std,label=label)
-    plt.legend()
-    plt.title(metric.upper()+'s')
+    plt.legend(loc='center left', bbox_to_anchor=((1, 0.5)), shadow=True)
+    plt.ylabel(metric.upper()+'s')
+    plt.xlabel(r'$N_{train}$')
+    plt.grid()
+    # plt.title(metric.upper())
 		

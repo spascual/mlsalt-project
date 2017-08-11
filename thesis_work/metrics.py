@@ -25,19 +25,21 @@ class METRICS(object):
 def ho_nll_samples(model, X_test, y_test, N_samples=100):
     N_test = X_test.shape[0]
     samples = model.sample_f(X_test, no_samples=N_samples).reshape(-1,N_samples)
-    sn = np.exp(model.get_hypers()['sn'])
+    sn =  np.exp(2 * model.get_hypers()['sn'])
     ho_lik = 0.0
+    ho_liks = np.zeros(y_test.shape)
     for i in range(N_test):
         mixture = stats.norm.pdf(y_test[i], loc=samples[i,:], scale=np.sqrt(sn))
         ho_lik += np.log(np.mean(mixture))
-    return -ho_lik/N_test
+        ho_liks[i] = np.log(np.mean(mixture))
+    return -ho_lik/N_test, ho_liks
 
 def nll_MLE_samples(model, X_test, y_test, N_samples=100):
 	N_test = X_test.shape[0]
 	samples = model.sample_f(X_test, no_samples=N_samples).reshape(-1,N_samples)
 	m = np.mean(samples,axis=1).reshape(-1,1)
 	v = np.var(samples,axis=1).reshape(-1,1)
-	sn = np.exp(model.get_hypers()['sn'])
+	sn = np.exp(2 * model.get_hypers()['sn'])
 	nll_samples = METRICS(y_test, m, v + sn * np.ones((N_test,1))).nll()
-	
+
 	return nll_samples

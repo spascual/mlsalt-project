@@ -933,6 +933,7 @@ class Base_SGP_Layer(object):
         zu = params['zu' + key_suffix]
         self.zu = zu
 
+        ## ORIGINAL:
         for d in range(self.Dout):
             theta_m_d = params['eta2' + key_suffix][d, :]
             theta_R_d = params['eta1_R' + key_suffix][d, :]

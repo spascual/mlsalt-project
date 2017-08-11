@@ -46,6 +46,9 @@ def sparse_GP_reg(X_train, y_train, X_test, y_test, M=30):
 	# model_sgp = GPy.models.SparseGPRegression(X_train,y_train, GPy.kern.RBF(input_dim=1),Z=Z)
 	# model_sgp.Z.unconstrain()
 	model_sgp = GPy.models.SparseGPRegression(X_train,y_train, kernel=GPy.kern.RBF(input_dim=1),num_inducing=M)
+	if M %2 == 1:
+		model_sgp.inference_method=GPy.inference.latent_function_inference.FITC()
+	# model_sgp.inference_method=GPy.inference.latent_function_inference.DTC()
 	model_sgp.optimize('bfgs',messages=False)
 	t1 = time.clock()
 

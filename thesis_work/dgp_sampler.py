@@ -45,10 +45,15 @@ class DGP_sampler(object):
             H_out = np.random.multivariate_normal(mu, layer_cov).reshape(-1,1)
 
             if layer_plots==True: 
-                plt.figure()
-                plt.plot(H_in[:],H_out[:], 'b+')
-                plt.title('From ' + str(l) + ' to ' + str(l+1))
-                plt.show()
+                if l == 0 : 
+                    fig = plt.figure()
+                    plt.figure()
+                    plt.xlabel('Input - x')
+                    plt.ylabel(r"Hidden layer - $h^{(1)}$")
+                    plt.plot(H_in[:],H_out[:], 'k.')
+                    # plt.title('From ' + str(l) + ' to ' + str(l+1))
+                    plt.show()
+                
             # Update
             H_in = H_out
 
@@ -75,16 +80,18 @@ class DGP_sampler(object):
             plt.show()
         else: 
             self.y = np.random.multivariate_normal(mu, out_cov + self.out_var*np.eye(self.N)).reshape(-1,1)
-            if layer_plots==True: 
-                plt.plot(H_in[:],self.y[:], 'b+')
-                plt.title('From ' + str(self.n_hidden_layers) + ' to y')
-                plt.show()
             fig = plt.figure()
-            plt.plot(self.X[:],self.y[:], 'b+')
-            plt.xlabel('x')
-            plt.ylabel('y')
+            plt.plot(H_in[:],self.y[:], 'k.')
+            plt.ylabel('Output - y')
+            plt.xlabel(r"Hidden layer - $h^{(1)}$")
+            # plt.title('From ' + str(self.n_hidden_layers) + ' to y')
+            plt.show()
+            fig = plt.figure()
+            plt.plot(self.X[:],self.y[:], 'k.')
+            plt.xlabel('Input - x')
+            plt.ylabel('Output - y')
             fig_name = 'lens = ' + str(self.kern_lens) + '; vars = ' + str(self.kern_vars)
-            plt.title(fig_name)
+            # plt.title(fig_name)
             plt.show()
 
         toc2 = time.clock()

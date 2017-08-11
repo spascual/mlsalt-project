@@ -15,7 +15,7 @@ class GP_figures(object):
 		self.model = model
 
 	def plot(self):
-		x_min, x_max = np.min(self.model.X)-2, np.max(self.model.X)+2
+		x_min, x_max = np.min(self.model.X)-4, np.max(self.model.X)+4
 		xx = np.linspace(x_min, x_max, 500)[:, None]
 		mean, var = self.model.predict(xx)
 		fig = plt.figure()
@@ -70,7 +70,7 @@ class DGP_figures(object):
 		                       self.conf_dict['hidden_size'], lik='Gaussian')
 		model_init.set_fixed_params(self.conf_dict['fixed_hyp'])
 		model_init.optimise(method='adam', maxiter=1, disp=False,reinit_hypers=self.conf_dict['init_type'] )
-		x_min, x_max = np.min(self.model.x_train)-2, np.max(self.model.x_train)+2
+		x_min, x_max = np.min(self.model.x_train)-4, np.max(self.model.x_train)+4
 		xx = np.linspace(x_min, x_max, 500)[:, None]
 		mean, var = model_init.predict_f(xx)
 		zu_init = model_init.sgp_layers[0].zu
@@ -112,7 +112,7 @@ class DGP_figures(object):
 		return fig
 
 	def plot(self):
-		x_min, x_max = np.min(self.model.x_train)-2, np.max(self.model.x_train)+2
+		x_min, x_max = np.min(self.model.x_train)-3, np.max(self.model.x_train)+3
 		xx = np.linspace(x_min, x_max, 500)[:, None]
 		mean, var = self.model.predict_f(xx)
 		zu = self.model.sgp_layers[0].zu
