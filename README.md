@@ -1,3 +1,3 @@
 # mlsalt-project
-This repository contains the work done for my MPhil project on Deep Gaussian Processes (DGPs) for Bayesian Optimization.
-The library geepee allows for a approximate inference framework for DGPs based on FITC-GP layers and Expected Propagation (EP)
+This repository contains the work done on Deep Gaussian Processes (DGPs) for Bayesian Optimization as part of my MPhil thesis project.
+The geepee library contains a collection of approximate inference schemes for DGPs including approximate Expected Propagation (EP) with sparse FITC-GP layers. 
